@@ -1,4 +1,4 @@
-package com.algogic.xscript.zk.util;
+package com.alogic.xscript.zk.util;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;

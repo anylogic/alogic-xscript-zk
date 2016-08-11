@@ -1,11 +1,11 @@
-package com.algogic.xscript.zk;
+package com.alogic.xscript.zk;
 
 import java.util.Map;
 
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 
-import com.algogic.xscript.zk.util.ZooKeeperConnector;
+import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;

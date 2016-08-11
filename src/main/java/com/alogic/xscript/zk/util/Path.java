@@ -1,4 +1,4 @@
-package com.algogic.xscript.zk.util;
+package com.alogic.xscript.zk.util;
 
 /**
  * ZK中的路径

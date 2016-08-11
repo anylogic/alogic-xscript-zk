@@ -1,11 +1,16 @@
-alogic-xscript-zk
-=================
+ZooKeeper操作案例
+==============
 
-alogic-xscript-zk是基于xscript2.0的zookeeper插件，提供了使用zk所需的相关指令，无缝对接zookeeper。
+下面是一个ZooKeeper的操作案例。
 
-### 案例
+> 您可以在工程代码目录下找到本案例代码
+> ```
+> 		/src/test/resources/xscript/Example.xml
+> ```
 
-下面的案例是对本地ZooKeeper的基本操作。
+下面是案例内容：
+
+```
 
 	<?xml version="1.0"?>
 	<script>
@@ -45,20 +50,4 @@ alogic-xscript-zk是基于xscript2.0的zookeeper插件，提供了使用zk所需
 	
 	</script>
 
-
-### 如何开始？
-
-为正确执行上述指令，需要在本地安装好ZooKeeper并启动。
-
-ZooKeeper启动后，就可以运行[demo](src/test/java/Demo.java)来测试xscript脚本。
-
-### 指令参考
-
-参见[alogic-xscript-zk参考](src/docs/reference.md)。
-
-### 版本历史
-    
-- 3.4.6 [20160809 duanyy]
-	+ 初次发布
-- 3.4.6 [20160811 lijun]
-	+ 补充了包com.alogic.xscript.zk内的ZooKeeper基本操作，并完成相关文档编写
+```

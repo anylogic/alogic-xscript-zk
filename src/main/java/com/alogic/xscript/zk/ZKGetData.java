@@ -1,9 +1,9 @@
-package com.algogic.xscript.zk;
+package com.alogic.xscript.zk;
 
 import java.util.Map;
 
-import com.algogic.xscript.zk.util.Path;
-import com.algogic.xscript.zk.util.ZooKeeperConnector;
+import com.alogic.xscript.zk.util.Path;
+import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
@@ -31,7 +31,7 @@ public class ZKGetData extends ZKOperation {
 		// TODO Auto-generated method stub
 		super.configure(p);
 
-		path = PropertiesConstants.getString(p, "path", "/");
+		path = PropertiesConstants.getString(p, "path", "");
 		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", false);
 	}
 
