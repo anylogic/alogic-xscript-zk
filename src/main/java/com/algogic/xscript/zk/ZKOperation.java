@@ -59,6 +59,5 @@ public abstract class ZKOperation extends AbstractLogiclet implements Watcher{
 			ExecuteWatcher watcher);
 		
 	public void process(WatchedEvent event) {
-
 	}		
 }

@@ -25,7 +25,6 @@ public class ZKConn extends Segment implements Watcher{
 	
 	public ZKConn(String tag, Logiclet p) {
 		super(tag, p);	
-		
 		registerModule("zk-children",ZKChildren.class);
 		registerModule("zk-delete",ZKDelete.class);
 		registerModule("zk-exist",ZKExist.class);
