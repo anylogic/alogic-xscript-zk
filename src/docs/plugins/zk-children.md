@@ -25,4 +25,4 @@ com.alogic.xscript.zk.ZKChildren
 ### 案例
 ```
 
-参考[ZooKeeper操作案例](Test.md)
+参考[ZooKeeper操作案例](Example.md)
