@@ -2,11 +2,14 @@ package com.alogic.xscript.zk;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alogic.xscript.zk.util.Path;
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
+import com.alogic.xscript.util.MapProperties;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 
@@ -18,7 +21,7 @@ import com.anysoft.util.PropertiesConstants;
  */
 public class ZKExist extends ZKOperation {
 
-	protected Path path;
+	protected String path;
 
 	public ZKExist(String tag, Logiclet p) {
 		super(tag, p);
@@ -28,14 +31,18 @@ public class ZKExist extends ZKOperation {
 	public void configure(Properties p) {
 		// TODO Auto-generated method stub
 		super.configure(p);
-		path = new Path(PropertiesConstants.getString(p, "path", "/", false));
+		path = PropertiesConstants.getRaw(p, "path", "");
 	}
 
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
-		ctx.SetValue(id, Boolean.toString(row.existPath(path, this, false)));
-
+		
+		String pathValue = ctx.transform(path);
+		
+		if (StringUtils.isNotEmpty(pathValue)) {
+			ctx.SetValue(id, Boolean.toString(row.existPath(new Path(pathValue), this, false)));
+		}
 	}
 
 }

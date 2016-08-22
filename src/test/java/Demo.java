@@ -38,7 +38,6 @@ public class Demo {
 		settings.addSettings("java:///conf/settings.xml#Demo", null, Settings.getResourceFactory());
 		
 		run("java:///xscript/Test.xml#Demo",settings);
-		
 	}
 
 }

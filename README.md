@@ -9,38 +9,49 @@ alogic-xscript-zk是基于xscript2.0的zookeeper插件，提供了使用zk所需
 
 	<?xml version="1.0"?>
 	<script>
-		<using xmlTag = "zk-conn" module = "com.alogic.xscript.zk.ZKConn" />
-		
-		<!-- 创建一个连接到本地ZooKeeper -->
-		<zk-conn connectString = "127.0.0.1:2181">
+		<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn" />
 	
-			<!-- 获得路径 / 下的子节点信息 -->
-			<zk-children path = "/" tag = "data"/>
-		
-			<!-- 获得/APP1/节点数据 -->
-			<zk-get path = "/APP1" id = "app1data"/> 
-		
-			<!-- 查看/APP2/节点是否存在 -->
-			<zk-exist path = "/APP2/" />
-			
-			<!-- 创建/APP2/节点 -->
-			<zk-mkpath path = "/APP2/" mode = "0" />
-			
-			<!-- 查看/APP2/节点是否存在 -->
-			<zk-exist path = "/APP2/"/>
-			
-			<!-- 给/APP2/节点设置数据 -->
-			<zk-set path = "/APP2/" mode = "0" data = "this-is-app2-data" />
-			
-			<!-- 查看/APP2/节点数据 -->
-			<zk-get path = "/APP2/" id = "app2data" />
+		<!-- 创建一个连接到本地ZooKeeper -->
+		<zk-conn connectString="127.0.0.1:2181">
 				
-			<!-- 删除/APP2/节点 -->
-			<zk-delete path = "/APP2/" />
+			<!-- 创建路径/app1，并前后查看路径存在情况 -->
+			<zk-exist path = "/app1" />
+			<zk-mkpath path = "/app1" />
+			<zk-exist path = "/app1" />
 			
-			<!-- 查看/APP2/节点是否存在 -->
-			<zk-exist path = "/APP2/" />
-		
+			<!-- 设置指定路径数据 -->
+			<zk-set path = "/app1" data = "app1-data" />
+			<!-- 获取指定路径数据 -->
+			<zk-get path = "/app1" />
+			
+			<!-- 删除指定路径 -->
+			<zk-delete path = "/app1" />
+			<zk-exist path = "/app1"/>
+			
+			
+			<zk-mkpath path = "/APP1" />
+			<zk-mkpath path = "/APP2" />
+			<zk-mkpath path = "/APP3" />
+			<zk-mkpath path = "/APP1/SAPP1" />
+			<zk-mkpath path = "/APP1/SAPP2" />
+			
+			<!-- 遍历子节点，可设置偏移量，循环变量由tag设置 -->
+			<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
+				<zk-exist path = "${item}" />
+				
+				<!-- 设置子节点数据 -->
+				<zk-set path = "${item}" data = "new-data"/>
+			</zk-children>
+			
+			<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
+				<zk-get path = "${item}" />
+			</zk-children>
+			
+			<!-- 删除子节点 -->
+			<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
+				<zk-delete path = "${item}" />
+			</zk-children>
+			
 		</zk-conn>
 	
 	</script>
@@ -62,3 +73,4 @@ ZooKeeper启动后，就可以运行[demo](src/test/java/Demo.java)来测试xscr
 	+ 初次发布
 - 3.4.6 [20160811 lijun]
 	+ 补充了包com.alogic.xscript.zk内的ZooKeeper基本操作，并完成相关文档编写
+	

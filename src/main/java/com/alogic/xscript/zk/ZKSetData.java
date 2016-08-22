@@ -10,6 +10,7 @@ import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
+import com.alogic.xscript.util.MapProperties;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 
@@ -35,8 +36,7 @@ public class ZKSetData extends ZKOperation{
 	public void configure(Properties p) {
 		// TODO Auto-generated method stub
 		super.configure(p);
-		
-		path = PropertiesConstants.getString(p, "path", "", false);
+		path = PropertiesConstants.getRaw(p, "path", "");
 		mode = PropertiesConstants.getInt(p, "mode", 0, false);
 		data = PropertiesConstants.getString(p, "data", "", false);
 		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", false);
@@ -45,9 +45,11 @@ public class ZKSetData extends ZKOperation{
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
-		// to do
+		
+		String pathValue = ctx.transform(path);
+
 		try {
-			row.createOrUpdate(new Path(path), data, ZooKeeperConnector.DEFAULT_ACL, CreateMode.fromFlag(mode), null, ignoreException);
+			row.createOrUpdate(new Path(pathValue), data, ZooKeeperConnector.DEFAULT_ACL, CreateMode.fromFlag(mode), null, ignoreException);
 		} catch (KeeperException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

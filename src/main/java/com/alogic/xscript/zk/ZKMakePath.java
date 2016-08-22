@@ -2,6 +2,7 @@ package com.alogic.xscript.zk;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 
@@ -35,19 +36,23 @@ public class ZKMakePath extends ZKOperation{
 		// TODO Auto-generated method stub
 		super.configure(p);
 		
-		path = PropertiesConstants.getString(p, "path", "", false);
+		path = PropertiesConstants.getRaw(p, "path", "");
 		mode = PropertiesConstants.getInt(p, "mode", 0, false);
 	}
 
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
-		// to do	
-		try {
-			row.makePath(new Path(path), ZooKeeperConnector.DEFAULT_ACL, CreateMode.fromFlag(mode));
-		} catch (KeeperException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		String pathValue = ctx.transform(path);
+
+		if (StringUtils.isNotBlank(pathValue)) {
+			try {
+				row.makePath(new Path(pathValue), ZooKeeperConnector.DEFAULT_ACL, CreateMode.fromFlag(mode));
+			} catch (KeeperException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 	}

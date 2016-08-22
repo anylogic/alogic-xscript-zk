@@ -1,41 +1,48 @@
 <?xml version="1.0"?>
 <script>
 	<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn" />
-	
+
 	<!-- 创建一个连接到本地ZooKeeper -->
 	<zk-conn connectString="127.0.0.1:2181">
-
-		<zk-children path = "/" />
-	
-		<!-- 获得/APP1/节点数据 -->
-		<zk-get path = "/APP1" id = "app1data"/> 
-			<get id="app1data:" value="${app1data}"/>
-	
-		<!-- 查看/APP2/节点是否存在 -->
-		<zk-exist path = "/APP2/" id = "beforePathCreated" />
-			<get id = "1-/APP2/ exist?" value = "${beforePathCreated}"/>
-		
-		<!-- 创建/APP2/节点 -->
-		<zk-mkpath path = "/APP2/" mode = "0" />
-		
-		<zk-children path = "/" id = "children"/>
-		
-		<!-- 查看/APP2/节点是否存在 -->
-		<zk-exist path = "/APP2/" id = "afterPathCreated"/>
-			<get id = "2-/APP2/ exist?" value = "${afterPathCreated}"/>
-		
-		<!-- 给/APP2/节点设置数据 -->
-		<zk-set path="/APP2/" mode="0" data="this-is-app2-data" />
-		
-		<!-- 查看/APP2/节点数据 -->
-		<zk-get path="/APP2/" id="app2data" />
-			<get id = "/APP2/ 's data" value = "${app2data}" />
 			
-		<!-- 删除/APP2/节点 -->
-		<zk-delete path = "/APP2/" />
-		<zk-exist path = "/APP2/" id = "afterPathDeleted" />
-			<get id = "3-/APP2/ exist?" value = "${afterPathDeleted}"/>
-	
+		<!-- 创建路径/app1，并前后查看路径存在情况 -->
+		<zk-exist path = "/app1" />
+		<zk-mkpath path = "/app1" />
+		<zk-exist path = "/app1" />
+		
+		<!-- 设置指定路径数据 -->
+		<zk-set path = "/app1" data = "app1-data" />
+		<!-- 获取指定路径数据 -->
+		<zk-get path = "/app1" />
+		
+		<!-- 删除指定路径 -->
+		<zk-delete path = "/app1" />
+		<zk-exist path = "/app1"/>
+		
+		
+		<zk-mkpath path = "/APP1" />
+		<zk-mkpath path = "/APP2" />
+		<zk-mkpath path = "/APP3" />
+		<zk-mkpath path = "/APP1/SAPP1" />
+		<zk-mkpath path = "/APP1/SAPP2" />
+		
+		<!-- 遍历子节点，可设置偏移量，循环变量由tag设置 -->
+		<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
+			<zk-exist path = "${item}" />
+			
+			<!-- 设置子节点数据 -->
+			<zk-set path = "${item}" data = "new-data"/>
+		</zk-children>
+		
+		<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
+			<zk-get path = "${item}" />
+		</zk-children>
+		
+		<!-- 删除子节点 -->
+		<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
+			<zk-delete path = "${item}" />
+		</zk-children>
+		
 	</zk-conn>
 
 </script>

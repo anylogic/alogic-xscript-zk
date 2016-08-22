@@ -16,20 +16,13 @@ com.alogic.xscript.zk.ZKChildren
 | 编号 | 代码 | 说明 |
 | ---- | ---- | ---- |
 | 1 | path | 指定的路径 |
-| 2 | tag | 插入文档的tag，缺省为data |
+| 2 | tag | 遍历子节点的循环变量 |
 | 3 | ignoreException | 是否忽略异常，缺省值为false |
+| 4 | offset | 设置偏移量 |
+| 5 | limt | 遍历数量 |
 
 
 ### 案例
 ```
 
-	<?xml version="1.0"?>
-	<script>
-		<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn" />
-		
-		<!-- 创建一个连接到本地ZooKeeper -->
-		<zk-conn connectString="127.0.0.1:2181">
-		
-		<!-- 下面是对基于这一连接的操作 -->
-		
-	</script>
+参考[ZooKeeper操作案例](Test.md)

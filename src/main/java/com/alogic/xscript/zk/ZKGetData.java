@@ -2,6 +2,8 @@ package com.alogic.xscript.zk;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.alogic.xscript.zk.util.Path;
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
@@ -31,16 +33,21 @@ public class ZKGetData extends ZKOperation {
 		// TODO Auto-generated method stub
 		super.configure(p);
 
-		path = PropertiesConstants.getString(p, "path", "");
+		path = PropertiesConstants.getRaw(p, "path", "");
 		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", false);
 	}
 
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
+		
+		String pathValue = ctx.transform(path);
+		
+		if (StringUtils.isNotBlank(pathValue)) {
+			ctx.SetValue(id, row.loadData(new Path(pathValue), this, ignoreException));
+		}
 
-		ctx.SetValue(id, row.loadData(new Path(path), this, ignoreException));
-
+		
 	}
 
 }

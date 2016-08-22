@@ -19,6 +19,7 @@ com.alogic.xscript.zk.ZKMakePath
 | 2 | mode | 创建模式，接收数值0~3，对应关系为：0:PERSISTENT; 1:EPHEMERAL; 2:PERSISTENT_SEQUENTIAL, 3:EPHEMERAL_SEQUENTIAL|
 
 
+
 ### 案例
 
 参考[ZooKeeper操作案例](Example.md)
