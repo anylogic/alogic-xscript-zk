@@ -35,7 +35,7 @@ public class ZKExist extends ZKOperation {
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {		
-		String pathValue = ctx.transform(path);
+		String pathValue = ctx.transform(path).trim();
 		
 		if (StringUtils.isNotEmpty(pathValue)) {
 			ctx.SetValue(id, Boolean.toString(row.existPath(new Path(pathValue), this, false)));

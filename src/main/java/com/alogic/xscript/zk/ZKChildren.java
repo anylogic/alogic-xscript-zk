@@ -39,7 +39,7 @@ public class ZKChildren extends Segment implements Watcher {
 		id = PropertiesConstants.getString(p,"id",id,true);
 		
 		path = PropertiesConstants.getRaw(p, "path", "");
-		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", false);
+		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", true);
 
 		offset = PropertiesConstants.getRaw(p, "offset", offset);
 		limit = PropertiesConstants.getRaw(p, "limit", limit);
@@ -59,7 +59,7 @@ public class ZKChildren extends Segment implements Watcher {
 		
 		List<String> childrenList = conn.getChildren(new Path(pathValue), this, ignoreException);
 
-		for (int i = (offsetValue < 0?0:offsetValue) ; i <= (offsetValue + limitValue) && i < childrenList.size() ; i ++){
+		for (int i = (offsetValue < 0?0:offsetValue) ; i < (offsetValue + limitValue) && i < childrenList.size() ; i ++){
 			ctx.SetValue(id, childrenList.get(i));
 			super.onExecute(root, current, ctx, watcher);
 		}

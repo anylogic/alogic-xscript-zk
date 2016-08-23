@@ -32,13 +32,13 @@ public class ZKGetData extends ZKOperation {
 		super.configure(p);
 
 		path = PropertiesConstants.getRaw(p, "path", "");
-		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", false);
+		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", true);
 	}
 
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
-		String pathValue = ctx.transform(path);
+		String pathValue = ctx.transform(path).trim();
 		
 		if (StringUtils.isNotEmpty(pathValue)) {
 			ctx.SetValue(id, row.loadData(new Path(pathValue), this, ignoreException));

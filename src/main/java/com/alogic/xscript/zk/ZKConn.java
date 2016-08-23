@@ -31,6 +31,8 @@ public class ZKConn extends Segment implements Watcher{
 		registerModule("zk-get",ZKGetData.class);
 		registerModule("zk-mkpath",ZKMakePath.class);
 		registerModule("zk-set",ZKSetData.class);
+		registerModule("zk-getAsJson",ZKGetAsJson.class);
+		registerModule("zk-setAsJson",ZKSetAsJson.class);
 	}
 
 	@Override

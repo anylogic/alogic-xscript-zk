@@ -4,8 +4,6 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.CreateMode;
-import org.apache.zookeeper.KeeperException;
-
 import com.alogic.xscript.zk.util.Path;
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
@@ -41,7 +39,7 @@ public class ZKMakePath extends ZKOperation{
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
-		String pathValue = ctx.transform(path);
+		String pathValue = ctx.transform(path).trim();
 
 		if (StringUtils.isNotEmpty(pathValue)) {
 			row.makePath(new Path(pathValue), ZooKeeperConnector.DEFAULT_ACL, getCreateMode(mode));

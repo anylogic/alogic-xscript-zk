@@ -10,13 +10,17 @@
 		<zk-mkpath path = "/app1" />
 		<zk-exist path = "/app1" />
 		
-		<!-- 设置指定路径数据 -->
-		<zk-set path = "/app1" data = "app1-data" />
+		<obj tag="data">
+			<get id="id" value="alogic"/>
+			<get id="name" value="ketty"/>
+			<zk-setAsJson id="jsonData"/>
+			<!-- 设置指定路径数据 -->
+			<zk-set path = "/app1" data = "${jsonData}" />			
+		</obj>
 		<!-- 获取指定路径数据 -->
 		<zk-get path = "/app1" />
 		
 		<!-- 删除指定路径 -->
-		<zk-delete path = "/app1" />
 		<zk-exist path = "/app1"/>
 		
 		
@@ -25,24 +29,7 @@
 		<zk-mkpath path = "/APP3" />
 		<zk-mkpath path = "/APP1/SAPP1" />
 		<zk-mkpath path = "/APP1/SAPP2" />
-		
-		<!-- 遍历子节点，可设置偏移量，循环变量由tag设置 -->
-		<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
-			<zk-exist path = "${item}" />
-			
-			<!-- 设置子节点数据 -->
-			<zk-set path = "${item}" data = "new-data"/>
-		</zk-children>
-		
-		<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
-			<zk-get path = "${item}" />
-		</zk-children>
-		
-		<!-- 删除子节点 -->
-		<zk-children tag = "item" path = "/" offset = "0" limit = "10" >
-			<zk-delete path = "${item}" />
-		</zk-children>
-		
+
 	</zk-conn>
 
 </script>
