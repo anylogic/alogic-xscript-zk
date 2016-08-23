@@ -58,6 +58,8 @@ public abstract class ZKOperation extends AbstractLogiclet implements Watcher{
 			Map<String, Object> current, LogicletContext ctx,
 			ExecuteWatcher watcher);
 		
+	@Override
 	public void process(WatchedEvent event) {
+		
 	}		
 }

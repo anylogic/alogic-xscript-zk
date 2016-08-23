@@ -29,7 +29,6 @@ public class ZKDelete extends ZKOperation {
 
 	@Override
 	public void configure(Properties p) {
-		// TODO Auto-generated method stub
 		super.configure(p);
 
 		path = PropertiesConstants.getRaw(p, "path", "");

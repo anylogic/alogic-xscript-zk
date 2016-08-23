@@ -9,7 +9,6 @@ import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
-import com.alogic.xscript.util.MapProperties;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 
@@ -29,7 +28,6 @@ public class ZKExist extends ZKOperation {
 
 	@Override
 	public void configure(Properties p) {
-		// TODO Auto-generated method stub
 		super.configure(p);
 		path = PropertiesConstants.getRaw(p, "path", "");
 	}

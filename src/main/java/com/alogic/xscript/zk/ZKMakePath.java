@@ -33,7 +33,6 @@ public class ZKMakePath extends ZKOperation{
 	
 	@Override
 	public void configure(Properties p) {
-		// TODO Auto-generated method stub
 		super.configure(p);
 		
 		path = PropertiesConstants.getRaw(p, "path", "");
@@ -50,7 +49,6 @@ public class ZKMakePath extends ZKOperation{
 			try {
 				row.makePath(new Path(pathValue), ZooKeeperConnector.DEFAULT_ACL, CreateMode.fromFlag(mode));
 			} catch (KeeperException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}

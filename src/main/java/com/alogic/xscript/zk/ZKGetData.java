@@ -30,7 +30,6 @@ public class ZKGetData extends ZKOperation {
 
 	@Override
 	public void configure(Properties p) {
-		// TODO Auto-generated method stub
 		super.configure(p);
 
 		path = PropertiesConstants.getRaw(p, "path", "");
@@ -43,11 +42,8 @@ public class ZKGetData extends ZKOperation {
 		
 		String pathValue = ctx.transform(path);
 		
-		if (StringUtils.isNotBlank(pathValue)) {
+		if (StringUtils.isNotEmpty(pathValue)) {
 			ctx.SetValue(id, row.loadData(new Path(pathValue), this, ignoreException));
 		}
-
-		
 	}
-
 }
