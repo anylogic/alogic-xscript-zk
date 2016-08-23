@@ -38,13 +38,11 @@ public class ZKDelete extends ZKOperation {
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
-
 		String pathValue = ctx.transform(path);
 		
-		if (StringUtils.isNotBlank(pathValue)) {
+		if (StringUtils.isNotEmpty(pathValue)) {
 			row.deletePath(new Path(pathValue), ignoreException);
 		}
-
 	}
 
 }

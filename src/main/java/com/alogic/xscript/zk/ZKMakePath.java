@@ -24,8 +24,7 @@ import com.anysoft.util.PropertiesConstants;
 public class ZKMakePath extends ZKOperation{
 
 	protected String path;
-	protected int mode;
-	
+	protected String mode = CreateMode.PERSISTENT.name();
 	
 	public ZKMakePath(String tag, Logiclet p) {
 		super(tag, p);
@@ -36,23 +35,16 @@ public class ZKMakePath extends ZKOperation{
 		super.configure(p);
 		
 		path = PropertiesConstants.getRaw(p, "path", "");
-		mode = PropertiesConstants.getInt(p, "mode", 0, false);
+		mode = PropertiesConstants.getString(p, "mode", mode, true);
 	}
 
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
-		
 		String pathValue = ctx.transform(path);
 
-		if (StringUtils.isNotBlank(pathValue)) {
-			try {
-				row.makePath(new Path(pathValue), ZooKeeperConnector.DEFAULT_ACL, CreateMode.fromFlag(mode));
-			} catch (KeeperException e) {
-				e.printStackTrace();
-			}
+		if (StringUtils.isNotEmpty(pathValue)) {
+			row.makePath(new Path(pathValue), ZooKeeperConnector.DEFAULT_ACL, getCreateMode(mode));
 		}
-		
 	}
-
 }

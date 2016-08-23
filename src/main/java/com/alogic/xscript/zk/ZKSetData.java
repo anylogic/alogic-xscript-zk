@@ -2,6 +2,7 @@ package com.alogic.xscript.zk;
 
 import java.util.Map;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 
@@ -23,7 +24,7 @@ import com.anysoft.util.PropertiesConstants;
 public class ZKSetData extends ZKOperation{
 	
 	protected String path;
-	protected int mode;
+	protected String mode = CreateMode.PERSISTENT.name();
 	protected String data;
 	protected boolean ignoreException;
 
@@ -35,20 +36,17 @@ public class ZKSetData extends ZKOperation{
 	public void configure(Properties p) {
 		super.configure(p);
 		path = PropertiesConstants.getRaw(p, "path", "");
-		mode = PropertiesConstants.getInt(p, "mode", 0, false);
-		data = PropertiesConstants.getString(p, "data", "", false);
-		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", false);
+		mode = PropertiesConstants.getString(p, "mode", mode, true);
+		data = PropertiesConstants.getString(p, "data", "", true);
+		ignoreException = PropertiesConstants.getBoolean(p, "ignoreException", true);
 	}
 
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
 		String pathValue = ctx.transform(path);
-
-		try {
-			row.createOrUpdate(new Path(pathValue), data, ZooKeeperConnector.DEFAULT_ACL, CreateMode.fromFlag(mode), null, ignoreException);
-		} catch (KeeperException e) {
-			e.printStackTrace();
+		if (StringUtils.isNotEmpty(pathValue)){
+			row.createOrUpdate(new Path(pathValue), data, ZooKeeperConnector.DEFAULT_ACL, getCreateMode(mode), null, ignoreException);
 		}
 	}
 

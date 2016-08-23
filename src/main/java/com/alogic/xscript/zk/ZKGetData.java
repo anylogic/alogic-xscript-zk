@@ -25,7 +25,6 @@ public class ZKGetData extends ZKOperation {
 
 	public ZKGetData(String tag, Logiclet p) {
 		super(tag, p);
-
 	}
 
 	@Override
@@ -39,7 +38,6 @@ public class ZKGetData extends ZKOperation {
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
 			LogicletContext ctx, ExecuteWatcher watcher) {
-		
 		String pathValue = ctx.transform(path);
 		
 		if (StringUtils.isNotEmpty(pathValue)) {

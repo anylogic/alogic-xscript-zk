@@ -34,8 +34,7 @@ public class ZKExist extends ZKOperation {
 
 	@Override
 	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
-			LogicletContext ctx, ExecuteWatcher watcher) {
-		
+			LogicletContext ctx, ExecuteWatcher watcher) {		
 		String pathValue = ctx.transform(path);
 		
 		if (StringUtils.isNotEmpty(pathValue)) {

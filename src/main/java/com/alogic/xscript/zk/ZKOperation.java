@@ -3,6 +3,7 @@ package com.alogic.xscript.zk;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 
@@ -23,7 +24,7 @@ import com.anysoft.util.PropertiesConstants;
  */
 public abstract class ZKOperation extends AbstractLogiclet implements Watcher{
 
-	private String pid = "$zk-conn";
+	protected String pid = "$zk-conn";
 	
 	/**
 	 * 返回结果的id
@@ -62,4 +63,20 @@ public abstract class ZKOperation extends AbstractLogiclet implements Watcher{
 	public void process(WatchedEvent event) {
 		
 	}		
+	
+	protected CreateMode getCreateMode(String name){
+		if (name.equalsIgnoreCase("PERSISTENT")){
+			return CreateMode.PERSISTENT;
+		}
+		if (name.equalsIgnoreCase("PERSISTENT_SEQUENTIAL")){
+			return CreateMode.PERSISTENT_SEQUENTIAL;
+		}
+		if (name.equalsIgnoreCase("EPHEMERAL")){
+			return CreateMode.EPHEMERAL;
+		}
+		if (name.equalsIgnoreCase("EPHEMERAL")){
+			return CreateMode.EPHEMERAL_SEQUENTIAL;
+		}		
+		return CreateMode.PERSISTENT;
+	}
 }
