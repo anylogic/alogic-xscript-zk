@@ -34,9 +34,11 @@ com.alogic.xscript.zk.ZKMakePath
 			<!-- 指定路径是否存在 -->
  			<zk-exist path = "/test/global/app-1" />
  			<log msg = "/test/global/app-1 exist? : ${$zk-exist} " />
+ 			
  			<!-- 创建路径 -->
- 			<zk-mkpath path = "/test/global/app-1" />
+ 			<zk-mkpath path = "/test/global/app-1" mode="PERSISTENT"/>
  			<log msg = "make path : /test/global/app-1 ...... " />
+ 			
  			<!-- 看下创建结果 -->
  			<zk-exist path = "/test/global/app-1" />
  			<log msg = "/test/global/app-1 exist? : ${$zk-exist} " />

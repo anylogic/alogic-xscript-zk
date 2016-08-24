@@ -34,7 +34,8 @@ com.alogic.xscript.zk.ZKSetData
 		
 			<!-- 设置要存的数据变量 -->
 			<set id="data" value="global-data" />
-			<zk-set path="/test/global" data="${data}" />	
+			
+			<zk-set path="/test/global" data="${data}" mode="PERSISTENT" />	
 			
 			<!-- 查看结果 -->
 			<zk-get path="/test/global" />
