@@ -1,7 +1,7 @@
 zk-mkpath
 =======
 
-zk-mkpath用于判断指定的路径是否存在。
+zk-mkpath用于创建指定的路径。
 
 >本指令对应ZooKeeper中的	create(String path, byte[] data, List<ACL> acl, CreateMode createMode)接口
 
