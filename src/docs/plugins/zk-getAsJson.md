@@ -21,4 +21,30 @@ com.alogic.xscript.zk.ZKGetAsJson
 
 ### 案例
 
+```
+
+	<?xml version="1.0"?>
+	<script>
+		<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn" />
+		
+		<!-- 创建一个连接到本地ZooKeeper -->
+		<zk-conn>
+		
+			<!-- 遍历指定路径的子路径输出到当前文档 -->
+ 			<array tag="instance">
+ 				<zk-children path="/test/global">
+ 		               <array-item>
+ 		               		<get id="id" value="${$value}"/>
+ 		               		<zk-get id="data" path="/test/global/${$value}"/>
+ 		               		<zk-getAsJson tag="data" content="${data}" extend="true"/>
+ 		               </array-item>
+ 				</zk-children>
+ 			 </array>
+ 			 
+		</zk-conn>
+	</script>
+
+```
+
+
 参考[ZooKeeper操作案例](Example.md)

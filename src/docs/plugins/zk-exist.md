@@ -21,4 +21,30 @@ com.alogic.xscript.zk.ZKExist
 
 ### 案例
 
+```
+
+	<?xml version="1.0"?>
+	<script>
+		<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn" />
+		
+		<!-- 创建一个连接到本地ZooKeeper -->
+		<zk-conn>
+		
+			<!-- 判断路径test/global是否存在 -->
+			<zk-exist path="test/global" />
+			<!-- 看看结果 -->
+			<log msg="path test/global exist? : ${$zk-exist}">
+			
+			
+			<!-- 判断路径test/global是否存在 -->
+			<zk-exist path="test/global" />
+			<!-- 看看结果 -->
+			<log msg="path test/global exist? : ${$zk-exist}" />
+			
+		</zk-conn>
+		
+	</script>
+
+```
+
 参考[ZooKeeper操作案例](Example.md)

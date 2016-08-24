@@ -28,4 +28,22 @@ com.alogic.xscript.zk.ZKChildren
 ### 案例
 ```
 
+	<?xml version="1.0"?>
+	<script>
+		<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn" />
+		
+		<!-- 创建一个连接到本地ZooKeeper -->
+		<zk-conn>
+		
+			<zk-children path="test/global" offset="1" limit="5">
+				
+				<!-- 下面对遍历的子节点进行操作 -->
+			
+			<zk-children/>
+		
+		</zk-conn>
+	</script>
+
+```
+
 参考[ZooKeeper操作案例](Example.md)
