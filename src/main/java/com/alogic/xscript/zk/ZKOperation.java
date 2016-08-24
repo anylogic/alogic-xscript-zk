@@ -74,7 +74,7 @@ public abstract class ZKOperation extends AbstractLogiclet implements Watcher{
 		if (name.equalsIgnoreCase("EPHEMERAL")){
 			return CreateMode.EPHEMERAL;
 		}
-		if (name.equalsIgnoreCase("EPHEMERAL")){
+		if (name.equalsIgnoreCase("EPHEMERAL_SEQUENTIAL")){
 			return CreateMode.EPHEMERAL_SEQUENTIAL;
 		}		
 		return CreateMode.PERSISTENT;

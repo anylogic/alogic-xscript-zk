@@ -3,32 +3,21 @@
 	<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn" />
 
 	<!-- 创建一个连接到本地ZooKeeper -->
-	<zk-conn connectString="127.0.0.1:2181">
-			
-		<!-- 创建路径/app1，并前后查看路径存在情况 -->
-		<zk-exist path = "/app1" />
-		<zk-mkpath path = "/app1" />
-		<zk-exist path = "/app1" />
+	<zk-conn >
 		
-		<obj tag="data">
-			<get id="id" value="alogic"/>
-			<get id="name" value="ketty"/>
-			<zk-setAsJson id="jsonData"/>
-			<!-- 设置指定路径数据 -->
-			<zk-set path = "/app1" data = "${jsonData}" />			
-		</obj>
-		<!-- 获取指定路径数据 -->
-		<zk-get path = "/app1" />
+		<!-- 遍历指定路径的子路径输出到当前文档 -->
+		<array tag="instance">
+			<zk-children path="/test/global">
+	               <array-item>
+	               		<get id="id" value="${$value}"/>
+	               		<zk-get id="data" path="/test/global/${$value}"/>
+	               		<zk-getAsJson tag="data" content="${data}" extend="true"/>
+	               </array-item>
+			</zk-children>
+		 </array>
 		
 		<!-- 删除指定路径 -->
-		<zk-exist path = "/app1"/>
-		
-		
-		<zk-mkpath path = "/APP1" />
-		<zk-mkpath path = "/APP2" />
-		<zk-mkpath path = "/APP3" />
-		<zk-mkpath path = "/APP1/SAPP1" />
-		<zk-mkpath path = "/APP1/SAPP2" />
+		<zk-delete path = "/test" />
 
 	</zk-conn>
 

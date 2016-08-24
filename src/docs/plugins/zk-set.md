@@ -16,9 +16,9 @@ com.alogic.xscript.zk.ZKSetData
 
 | 编号 | 代码 | 说明 |
 | ---- | ---- | ---- |
-| 1 | path | 指定的路径 |
-| 2 | mode | 创建模式，接收数值0~3，对应关系为：0:PERSISTENT; 1:EPHEMERAL; 2:PERSISTENT_SEQUENTIAL, 3:EPHEMERAL_SEQUENTIAL|
-| 3 | data | 设置的数据，String类型 |
+| 1 | path | 指定的路径，可计算的 |
+| 2 | mode | 创建模式，接收字符串:PERSISTENT; EPHEMERAL; PERSISTENT_SEQUENTIAL; EPHEMERAL_SEQUENTIAL，对应关系分别为：PERSISTENT; EPHEMERAL; PERSISTENT_SEQUENTIAL; EPHEMERAL_SEQUENTIAL |
+| 3 | data | 设置的数据，可计算的 |
 | 4 | ignoreException | 是否忽略异常，缺省值为false |
 
 ### 案例

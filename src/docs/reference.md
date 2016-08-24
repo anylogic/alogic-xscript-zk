@@ -10,3 +10,5 @@ alogic-xscript-zk插件包括：
 - [zk-get查询指定路径的数据](plugins/zk-get.md)
 - [zk-set设置指定路径的数据](plugins/zk-set.md)
 - [zk-mkpath创建指定的路径](plugins/zk-mkpath.md)
+- [zk-getAsJson将数据以Json字符串输出到当前节点](plugins/zk-setAsJson.md)
+- [zk-setAsJson将当前节点以Json字符串存入变量](plugins/zk-setAsJson.md)

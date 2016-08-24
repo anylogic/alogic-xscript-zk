@@ -20,6 +20,21 @@ com.alogic.xscript.zk.ZKConn
 
 
 ### 案例
+可以在conf/setting中设置参数${zookeeper.connectString}来指定zookeeper连接地址
+```
+
+	<?xml version="1.0"?>
+	<settings>
+	
+		<parameter id="zookeeper.connectString" value="127.0.0.1:2181"/>
+		<parameter id="sessionTimeout" value="3000"/>
+		
+	</settings>
+
+```
+
+也可以在脚本中指定zookeeper连接地址
+
 ```
 
 	<?xml version="1.0"?>

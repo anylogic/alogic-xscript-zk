@@ -15,7 +15,7 @@ com.alogic.xscript.zk.ZKGetData
 
 | 编号 | 代码 | 说明 |
 | ---- | ---- | ---- |
-| 1 | path | 指定的路径 |
+| 1 | path | 指定的路径，可计算的 |
 | 2 | ignoreException | 是否忽略异常,缺省值为false |
 | 2 | id | 操作返回变量id,缺省为$zk-get |
 
