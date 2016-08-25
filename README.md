@@ -1,13 +1,51 @@
 alogic-xscript-zk
 =================
 
+### Overview
+
 alogic-xscript-zk是基于xscript2.0的zookeeper插件，提供了使用zk所需的相关指令，无缝对接zookeeper。
 
-### 案例
+
+### Getting started
+
+按照以下步骤，您可轻松在您的项目中使用alogic-xscript-zk.
+
+#### 增加maven依赖
+
+您可以在中央仓库上找到[alogic-xscript-zk](http://mvnrepository.com/search?q=com.github.anylogic%3Aalogic-xscript-zk)的发布版本。
+
+```xml
+
+    <dependency>
+        <groupId>com.github.anylogic</groupId>
+        <artifactId>alogic-xscript-zk</artifactId>
+        <version>3.4.6-20160825</version>
+    </dependency>   	
+
+```
+
+> alogic-xscript-zk版本号前面的3.4.6是其所依赖的ZooKeeper客户端的版本号，后面的20160825是其发布的日期。
+
+#### 引入Namespace
+
+在您的脚本中，你需要引入ZKConn作为Namespace，比如:
+
+```xml
+	
+	<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn"/>
+	
+	<zk-conn>
+		<!--
+			在这里你可以使用alogic-xcript-zk提供的语句
+		-->
+	</zk-conn>
+```
+
+### Example
 
 下面的案例是对本地ZooKeeper的基本操作。
 
-首先为方便事例，先进行测试数据准备，代码如下：
+```xml
 
 	<?xml version="1.0"?>
 	<script>
@@ -43,22 +81,7 @@ alogic-xscript-zk是基于xscript2.0的zookeeper插件，提供了使用zk所需
 					<!-- 设置指定路径数据 -->
 					<zk-set path = "/test/global/${$value}" data = "${jsonData}" />			
 				</obj>
-			</zk-children>
-			
-			
-			
-		</zk-conn>
-	
-	</script>
-	
-在本地拥有测试数据后，执行的操作如下：
-
-	<?xml version="1.0"?>
-	<script>
-		<using xmlTag="zk-conn" module="com.alogic.xscript.zk.ZKConn" />
-	
-		<!-- 创建一个连接到本地ZooKeeper -->
-		<zk-conn >
+			</zk-children>		
 			
 			<!-- 遍历指定路径的子路径输出到当前文档 -->
 			<array tag="instance">
@@ -77,26 +100,34 @@ alogic-xscript-zk是基于xscript2.0的zookeeper插件，提供了使用zk所需
 		</zk-conn>
 	
 	</script>
+```
 
+为正确执行上述指令，需要在本地安装好ZooKeeper并启动，并且在[settings.xml](src/test/resources/settings.xml)中配置zk的位置：
 
-### 如何开始？
+```xml
 
-为正确执行上述指令，需要在本地安装好ZooKeeper并启动。
+	<parameter id="zookeeper.connectString" value="127.0.0.1:2181"/>
+
+```
 
 ZooKeeper启动后，就可以运行[demo](src/test/java/Demo.java)来测试xscript脚本。
 
-### 指令参考
+### Reference
 
 参见[alogic-xscript-zk参考](src/docs/reference.md)。
 
-### 版本历史
+### History
     
 - 3.4.6 [20160809 duanyy]
 	+ 初次发布
-- 3.4.7 [20160811 lijun]
+- 3.4.6.1 [20160811 lijun]
 	+ 补充了包com.alogic.xscript.zk内的ZooKeeper基本操作，并完成相关文档编写
-- 3.4.8 [20160823 duanyy]
+- 3.4.6.2 [20160823 duanyy]
 	+ 修正代码，增加zk-setAsJson,zk-getAsJson
-- 3.4.9 [20160824 lijun]
+- 3.4.6.3 [20160824 lijun]
 	+ 修改测试脚本，修改相应文档
+- 3.4.6.4 [20160825 duanyy]
+	+ 发布20160825版本。
+	
+
 	

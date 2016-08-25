@@ -37,8 +37,7 @@ public class Demo {
 		settings.addSettings(new CommandLine(args));		
 		settings.addSettings("java:///conf/settings.xml#Demo", null, Settings.getResourceFactory());
 		
-		run("java:///xscript/PrepareData.xml#Demo",settings);
-		run("java:///xscript/Test.xml#Demo",settings);
+		run("java:///xscript/All.xml#Demo",settings);
 	}
 
 }
