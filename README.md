@@ -10,6 +10,12 @@ alogic-xscript-zk是基于xscript2.0的zookeeper插件，提供了使用zk所需
 
 按照以下步骤，您可轻松在您的项目中使用alogic-xscript-zk.
 
+不过开始之前，我们希望您了解xscript的相关知识。
+
+- [xscript2.0](https://github.com/yyduan/alogic/blob/master/alogic-doc/alogic-common/xscript2.md) - 您可以了解xscript的基本原理及基本编程思路
+- [xscript2.0基础插件](https://github.com/yyduan/alogic/blob/master/alogic-doc/alogic-common/xscript2-plugins.md) - 如何使用xscript的基础插件
+- [基于xscript的together](https://github.com/yyduan/alogic/blob/master/alogic-doc/alogic-common/xscript2-together.md) - 如何将你的script发布为alogic服务
+
 #### 增加maven依赖
 
 您可以在中央仓库上找到[alogic-xscript-zk](http://mvnrepository.com/search?q=com.github.anylogic%3Aalogic-xscript-zk)的发布版本。
