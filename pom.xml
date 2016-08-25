@@ -11,7 +11,6 @@
 			<groupId>com.github.anylogic</groupId>
 			<artifactId>alogic-common</artifactId>
 			<version>${alogic.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.zookeeper</groupId>
@@ -25,20 +24,6 @@
 			</exclusions>
 		</dependency>	
 	</dependencies>
-
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>Internal Releases</name>
-			<url>http://10.142.90.52:8002/content/repositories/releases</url>
-		</repository>
-		<snapshotRepository>
-			<id>snapshots</id>
-			<name>Internal Snapshots</name>
-			<url>http://10.142.90.52:8002/content/repositories/snapshots</url>
-		</snapshotRepository>
-	</distributionManagement>
-
 	<build>
 		<plugins>
 			<plugin>
