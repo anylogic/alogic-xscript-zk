@@ -5,12 +5,15 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
+import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
+import org.apache.zookeeper.Watcher.Event.KeeperState;
 import org.apache.zookeeper.ZooKeeper;
 import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.ZooDefs.Perms;
@@ -27,7 +30,7 @@ import com.anysoft.util.PropertiesConstants;
  * @author duanyy
  *
  */
-public final class ZooKeeperConnector {
+public final class ZooKeeperConnector implements Watcher{
 	/**
 	 * a logger of log4j
 	 */
@@ -59,6 +62,8 @@ public final class ZooKeeperConnector {
 	 */
 	protected Watcher watcher = null;
 	
+	private CountDownLatch connectedSignal = new CountDownLatch(1);  
+	
 	public ZooKeeperConnector(Properties props,Watcher _watcher){
 		connectString = PropertiesConstants.getString(props, "connectString",
 				connectString);
@@ -66,7 +71,7 @@ public final class ZooKeeperConnector {
 				sessionTimeout);
 		encoding = PropertiesConstants.getString(props,"encoding", encoding);
 		
-		watcher = _watcher;
+//		watcher = _watcher;
 		
 		connect();
 	}
@@ -77,7 +82,18 @@ public final class ZooKeeperConnector {
 				sessionTimeout);
 		encoding = PropertiesConstants.getString(props,"encoding", encoding);
 		
-		watcher = _watcher;
+//		watcher = _watcher;
+		
+		connect();
+	}
+	
+	public ZooKeeperConnector(Properties props, String connectStrings){
+		connectString = connectStrings;
+		sessionTimeout = PropertiesConstants.getInt(props, "sessionTimeout",
+				sessionTimeout);
+		encoding = PropertiesConstants.getString(props,"encoding", encoding);
+		
+//		watcher = _watcher;
 		
 		connect();
 	}
@@ -87,9 +103,13 @@ public final class ZooKeeperConnector {
 	 */
 	public void connect(){
 		try {
-			zookeeper = new ZooKeeper(connectString, sessionTimeout, watcher);
+			zookeeper = new ZooKeeper(connectString, sessionTimeout, this);
+			connectedSignal.await();
 		} catch (IOException e) {
 			logger.error("Can not connect to zookeeper:" + connectString);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
@@ -372,6 +392,13 @@ public final class ZooKeeperConnector {
 	}
 	
     public static final ArrayList<ACL> DEFAULT_ACL = new ArrayList<ACL>(
-            Collections.singletonList(new ACL(Perms.ALL, Ids.ANYONE_ID_UNSAFE)));	
+            Collections.singletonList(new ACL(Perms.ALL, Ids.ANYONE_ID_UNSAFE)));
+
+	@Override
+	public void process(WatchedEvent event) {
+		if (event.getState() == KeeperState.SyncConnected) {  
+			connectedSignal.countDown();  
+		} 
+	}	
     
 }

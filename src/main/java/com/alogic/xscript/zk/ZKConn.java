@@ -2,9 +2,6 @@ package com.alogic.xscript.zk;
 
 import java.util.Map;
 
-import org.apache.zookeeper.WatchedEvent;
-import org.apache.zookeeper.Watcher;
-
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
@@ -19,7 +16,7 @@ import com.anysoft.util.PropertiesConstants;
  * @author duanyy
  *
  */
-public class ZKConn extends Segment implements Watcher{
+public class ZKConn extends Segment{
 	protected String cid = "$zk-conn";
 	protected String connectString = "${zookeeper.connectString}";
 	
@@ -46,16 +43,14 @@ public class ZKConn extends Segment implements Watcher{
 	@Override
 	protected void onExecute(Map<String, Object> root,
 			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
-		ZooKeeperConnector conn = new ZooKeeperConnector(ctx,this,connectString);
+		ZooKeeperConnector conn = new ZooKeeperConnector(ctx,connectString);
 		try {
 			ctx.setObject(cid, conn);
 			super.onExecute(root, current, ctx, watcher);
 		}finally{
+			conn.disconnect();
 			ctx.removeObject(cid);
 		}
 	}
 
-	public void process(WatchedEvent event) {
-
-	}	
 }
