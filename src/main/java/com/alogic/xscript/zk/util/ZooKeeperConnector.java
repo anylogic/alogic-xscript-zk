@@ -7,8 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import org.apache.log4j.LogManager;
-import org.apache.log4j.Logger;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.KeeperException;
 import org.apache.zookeeper.WatchedEvent;
@@ -19,6 +17,8 @@ import org.apache.zookeeper.ZooDefs.Ids;
 import org.apache.zookeeper.ZooDefs.Perms;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Stat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.anysoft.util.BaseException;
 import com.anysoft.util.Properties;
@@ -34,8 +34,7 @@ public final class ZooKeeperConnector implements Watcher{
 	/**
 	 * a logger of log4j
 	 */
-	protected static Logger logger = LogManager.getLogger(ZooKeeperConnector.class);
-	
+	protected static Logger logger = LoggerFactory.getLogger(ZooKeeperConnector.class);
 	
 	/**
 	 * ZooKeeper的连接串
@@ -103,6 +102,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 */
 	public void connect(){
 		try {
+			System.out.println("connecting to " + connectString);
 			zookeeper = new ZooKeeper(connectString, sessionTimeout, this);
 			connectedSignal.await();
 		} catch (IOException e) {
