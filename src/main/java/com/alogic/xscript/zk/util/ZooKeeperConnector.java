@@ -23,6 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.anysoft.util.BaseException;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
+import com.anysoft.util.UPath;
 
 /**
  * ZooKeeper连接器
@@ -34,7 +35,13 @@ public final class ZooKeeperConnector implements Watcher{
 	/**
 	 * a logger of log4j
 	 */
-	protected static Logger logger = LoggerFactory.getLogger(ZooKeeperConnector.class);
+	protected final static Logger logger = LoggerFactory.getLogger(ZooKeeperConnector.class);
+	
+	/**
+	 * 缺省的ACL
+	 */
+    public final static ArrayList<ACL> DEFAULT_ACL = new ArrayList<ACL>(
+            Collections.singletonList(new ACL(Perms.ALL, Ids.ANYONE_ID_UNSAFE)));	
 	
 	/**
 	 * ZooKeeper的连接串
@@ -55,45 +62,25 @@ public final class ZooKeeperConnector implements Watcher{
 	 * ZooKeeper中的数据编码
 	 */
 	protected String encoding = "utf-8";
-	
-	/**
-	 * 监听器
-	 */
-	protected Watcher watcher = null;
-	
+
 	private CountDownLatch connectedSignal = new CountDownLatch(1);  
 	
-	public ZooKeeperConnector(Properties props,Watcher _watcher){
+	public ZooKeeperConnector(Properties props){
 		connectString = PropertiesConstants.getString(props, "connectString",
 				connectString);
 		sessionTimeout = PropertiesConstants.getInt(props, "sessionTimeout",
 				sessionTimeout);
 		encoding = PropertiesConstants.getString(props,"encoding", encoding);
 		
-//		watcher = _watcher;
-		
 		connect();
 	}
 	
-	public ZooKeeperConnector(Properties props,Watcher _watcher, String connectStrings){
+	public ZooKeeperConnector(Properties props,String connectStrings){
 		connectString = connectStrings;
 		sessionTimeout = PropertiesConstants.getInt(props, "sessionTimeout",
 				sessionTimeout);
 		encoding = PropertiesConstants.getString(props,"encoding", encoding);
-		
-//		watcher = _watcher;
-		
-		connect();
-	}
-	
-	public ZooKeeperConnector(Properties props, String connectStrings){
-		connectString = connectStrings;
-		sessionTimeout = PropertiesConstants.getInt(props, "sessionTimeout",
-				sessionTimeout);
-		encoding = PropertiesConstants.getString(props,"encoding", encoding);
-		
-//		watcher = _watcher;
-		
+
 		connect();
 	}
 	
@@ -102,14 +89,13 @@ public final class ZooKeeperConnector implements Watcher{
 	 */
 	public void connect(){
 		try {
-			System.out.println("connecting to " + connectString);
+			logger.info("connecting to " + connectString);
 			zookeeper = new ZooKeeper(connectString, sessionTimeout, this);
 			connectedSignal.await();
 		} catch (IOException e) {
 			logger.error("Can not connect to zookeeper:" + connectString);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Can not connect to zookeeper:" + connectString);
 		}
 	}
 	
@@ -149,7 +135,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @param ignoreException 是否忽略异常
 	 * @return 节点数据
 	 */
-	public String loadData(Path path,Watcher watcher,boolean ignoreException){
+	public String loadData(UPath path,Watcher watcher,boolean ignoreException){
 		if (!isConnected()){
 			if (!ignoreException)
 				throw new BaseException("zk.noconn","the zk is not connected.");
@@ -187,7 +173,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @param ignoreException 是否忽略异常
 	 * @return 子节点列表
 	 */
-	public String [] loadChildren(Path path,Watcher watcher,boolean ignoreException){
+	public String [] loadChildren(UPath path,Watcher watcher,boolean ignoreException){
 		if (!isConnected()){
 			if (!ignoreException)
 				throw new BaseException("zk.noconn","the zk is not connected.");
@@ -204,7 +190,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @param ignoreException 是否忽略异常
 	 * @return 子节点列表
 	 */	
-	public List<String> getChildren(Path path,Watcher watcher,boolean ignoreException){
+	public List<String> getChildren(UPath path,Watcher watcher,boolean ignoreException){
 		if (!isConnected()){
 			if (!ignoreException)
 				throw new BaseException("zk.noconn","the zk is not connected.");
@@ -235,7 +221,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @param ignoreException 是否忽略异常
 	 * @return true|false
 	 */
-	public boolean existPath(Path path,Watcher watcher,boolean ignoreException){
+	public boolean existPath(UPath path,Watcher watcher,boolean ignoreException){
 		if (!isConnected()){
 			if (!ignoreException)
 				throw new BaseException("zk.noconn","the zk is not connected.");
@@ -268,7 +254,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @param watcher　监听器
 	 * @param ignoreException　是否忽略异常
 	 */
-	public void createOrUpdate(Path path,String data,List<ACL> acls,CreateMode mode,
+	public void createOrUpdate(UPath path,String data,List<ACL> acls,CreateMode mode,
 			Watcher watcher,boolean ignoreException){
 		if (!isConnected()){
 			if (!ignoreException)
@@ -309,7 +295,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @param mode 创建模式
 	 * @param ignoreException 是否忽略异常
 	 */
-	public String create(Path path,String data,List<ACL> acls,CreateMode mode,boolean ignoreException){
+	public String create(UPath path,String data,List<ACL> acls,CreateMode mode,boolean ignoreException){
 		if (!isConnected()){
 			if (!ignoreException)
 				throw new BaseException("zk.noconn","the zk is not connected.");
@@ -336,16 +322,16 @@ public final class ZooKeeperConnector implements Watcher{
 	 * 创建ZooKeeper路径
 	 * @param path
 	 */
-	public void makePath(Path path,List<ACL> acls,CreateMode mode){
+	public void makePath(UPath path,List<ACL> acls,CreateMode mode){
 		String _path = path.getPath();
 		String [] _paths = _path.split("/");
-		Path _thePath = new Path("");
+		UPath _thePath = new UPath("");
 		for (String _segment:_paths){
 			if (_segment.length() <= 0)
 				continue;
 			_thePath = _thePath.append(_segment);
-			if (! existPath(_thePath, watcher, true)){
-				create(_thePath,_segment,acls,mode,true);
+			if (! existPath(_thePath, null, true)){
+				create(_thePath,"",acls,mode,true);
 			}
 		}
 	}
@@ -354,7 +340,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * 删除指定路径的节点
 	 * @param path 路径
 	 */
-	public void delete(Path path,boolean ignoreException){
+	public void delete(UPath path,boolean ignoreException){
 		if (!isConnected()){
 			if (!ignoreException)
 				throw new BaseException("zk.noconn","the zk is not connected.");
@@ -377,7 +363,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @param path 路径
 	 * @param ignoreException 是否忽略异常
 	 */
-	public void deletePath(Path path,boolean ignoreException){
+	public void deletePath(UPath path,boolean ignoreException){
 		boolean exist = existPath(path, null, ignoreException);
 		if (!exist){
 			return ;
@@ -391,14 +377,29 @@ public final class ZooKeeperConnector implements Watcher{
 		delete(path,ignoreException);
 	}
 	
-    public static final ArrayList<ACL> DEFAULT_ACL = new ArrayList<ACL>(
-            Collections.singletonList(new ACL(Perms.ALL, Ids.ANYONE_ID_UNSAFE)));
+	/**
+	 * 将带有/的路径进行转义
+	 * 
+	 * @param path 路径
+	 * @return 转义之后的路径
+	 */
+	public static String escapePath(String path){
+		return path.replace("/", ".");
+	}
+	
+	/**
+	 * 将带有/的路径进行反转义
+	 * @param id 
+	 * @return
+	 */
+	public static String unescapePath(String escaped){
+		return escaped.replace(".", "/");
+	}	
 
 	@Override
 	public void process(WatchedEvent event) {
 		if (event.getState() == KeeperState.SyncConnected) {  
 			connectedSignal.countDown();  
 		} 
-	}	
-    
+	}
 }

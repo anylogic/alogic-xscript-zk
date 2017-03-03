@@ -30,6 +30,8 @@ public class ZKConn extends Segment{
 		registerModule("zk-set",ZKSetData.class);
 		registerModule("zk-getAsJson",ZKGetAsJson.class);
 		registerModule("zk-setAsJson",ZKSetAsJson.class);
+		registerModule("zk-escapePath",ZKEscapePath.class);
+		registerModule("zk-unescapePath",ZKUnescapePath.class);
 	}
 
 	@Override

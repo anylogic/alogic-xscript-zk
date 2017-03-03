@@ -4,13 +4,14 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.CreateMode;
-import com.alogic.xscript.zk.util.Path;
+
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
+import com.anysoft.util.UPath;
 
 
 /**
@@ -42,7 +43,7 @@ public class ZKMakePath extends ZKOperation{
 		String pathValue = ctx.transform(path).trim();
 
 		if (StringUtils.isNotEmpty(pathValue)) {
-			row.makePath(new Path(pathValue), ZooKeeperConnector.DEFAULT_ACL, getCreateMode(mode));
+			row.makePath(new UPath(pathValue), ZooKeeperConnector.DEFAULT_ACL, getCreateMode(mode));
 		}
 	}
 }

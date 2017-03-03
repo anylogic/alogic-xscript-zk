@@ -4,13 +4,13 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.alogic.xscript.zk.util.Path;
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
+import com.anysoft.util.UPath;
 
 /**
  * 获取指定路径的数据
@@ -41,7 +41,7 @@ public class ZKGetData extends ZKOperation {
 		String pathValue = ctx.transform(path).trim();
 		
 		if (StringUtils.isNotEmpty(pathValue)) {
-			ctx.SetValue(id, row.loadData(new Path(pathValue), this, ignoreException));
+			ctx.SetValue(id, row.loadData(new UPath(pathValue), this, ignoreException));
 		}
 	}
 }

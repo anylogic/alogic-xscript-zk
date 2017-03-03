@@ -134,6 +134,8 @@ ZooKeeper启动后，就可以运行[demo](src/test/java/Demo.java)来测试xscr
 	+ 修改测试脚本，修改相应文档
 - 3.4.6.4 [20160825 duanyy]
 	+ 发布20160825版本。
+- 3.4.6.5 [20170303 duanyy]
+	+ ZookeeperConnector的Path修改为UPath
 	
 
 	
