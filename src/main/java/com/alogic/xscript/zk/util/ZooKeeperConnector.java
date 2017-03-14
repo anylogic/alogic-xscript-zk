@@ -384,7 +384,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @return 转义之后的路径
 	 */
 	public static String escapePath(String path){
-		return path.replace("/", ".");
+		return path.replace("/", "$");
 	}
 	
 	/**
@@ -393,7 +393,7 @@ public final class ZooKeeperConnector implements Watcher{
 	 * @return
 	 */
 	public static String unescapePath(String escaped){
-		return escaped.replace(".", "/");
+		return escaped.replace("$", "/");
 	}	
 
 	@Override
