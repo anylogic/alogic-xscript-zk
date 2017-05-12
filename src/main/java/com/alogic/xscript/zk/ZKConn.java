@@ -1,11 +1,10 @@
 package com.alogic.xscript.zk;
 
-import java.util.Map;
-
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
+import com.alogic.xscript.doc.XsObject;
 import com.alogic.xscript.plugins.Segment;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
@@ -43,8 +42,7 @@ public class ZKConn extends Segment{
 	}
 	
 	@Override
-	protected void onExecute(Map<String, Object> root,
-			Map<String, Object> current, LogicletContext ctx, ExecuteWatcher watcher) {
+	protected void onExecute(XsObject root,XsObject current, LogicletContext ctx, ExecuteWatcher watcher) {
 		ZooKeeperConnector conn = new ZooKeeperConnector(ctx,connectString);
 		try {
 			ctx.setObject(cid, conn);

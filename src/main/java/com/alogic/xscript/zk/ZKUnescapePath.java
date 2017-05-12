@@ -1,13 +1,11 @@
 package com.alogic.xscript.zk;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
-
 import com.alogic.xscript.AbstractLogiclet;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
+import com.alogic.xscript.doc.XsObject;
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
@@ -35,8 +33,7 @@ public class ZKUnescapePath extends AbstractLogiclet{
 	}	
 
 	@Override
-	protected void onExecute(Map<String, Object> root,
-			Map<String, Object> current, LogicletContext ctx,
+	protected void onExecute(XsObject root,XsObject current, LogicletContext ctx,
 			ExecuteWatcher watcher) {
 		if (StringUtils.isNotEmpty(id)){
 			String v = ctx.transform(value);

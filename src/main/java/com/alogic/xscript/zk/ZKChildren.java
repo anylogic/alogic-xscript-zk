@@ -1,14 +1,12 @@
 package com.alogic.xscript.zk;
 
 import java.util.List;
-import java.util.Map;
-
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
-
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
+import com.alogic.xscript.doc.XsObject;
 import com.alogic.xscript.plugins.Segment;
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.anysoft.util.BaseException;
@@ -50,7 +48,7 @@ public class ZKChildren extends Segment implements Watcher {
 	}
 
 	@Override
-	protected void onExecute(Map<String, Object> root, Map<String, Object> current, LogicletContext ctx,
+	protected void onExecute(XsObject root,XsObject current, LogicletContext ctx,
 			ExecuteWatcher watcher) {
 		ZooKeeperConnector conn = ctx.getObject(pid);
 		if (conn == null){

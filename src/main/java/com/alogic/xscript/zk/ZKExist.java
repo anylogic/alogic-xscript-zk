@@ -1,9 +1,8 @@
 package com.alogic.xscript.zk;
 
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
-
+import com.alogic.xscript.doc.XsObject;
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
@@ -33,7 +32,7 @@ public class ZKExist extends ZKOperation {
 	}
 
 	@Override
-	protected void onExecute(ZooKeeperConnector row, Map<String, Object> root, Map<String, Object> current,
+	protected void onExecute(ZooKeeperConnector row, XsObject root,XsObject current,
 			LogicletContext ctx, ExecuteWatcher watcher) {		
 		String pathValue = ctx.transform(path).trim();
 		

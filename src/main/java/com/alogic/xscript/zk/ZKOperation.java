@@ -1,12 +1,11 @@
 package com.alogic.xscript.zk;
 
-import java.util.Map;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.zookeeper.CreateMode;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 
+import com.alogic.xscript.doc.XsObject;
 import com.alogic.xscript.zk.util.ZooKeeperConnector;
 import com.alogic.xscript.AbstractLogiclet;
 import com.alogic.xscript.ExecuteWatcher;
@@ -42,8 +41,7 @@ public abstract class ZKOperation extends AbstractLogiclet implements Watcher{
 	}
 
 	@Override
-	protected void onExecute(Map<String, Object> root,
-			Map<String, Object> current, LogicletContext ctx,
+	protected void onExecute(XsObject root,XsObject current, LogicletContext ctx,
 			ExecuteWatcher watcher) {
 		ZooKeeperConnector conn = ctx.getObject(pid);
 		if (conn == null){
@@ -55,8 +53,7 @@ public abstract class ZKOperation extends AbstractLogiclet implements Watcher{
 		}
 	}
 
-	protected abstract void onExecute(ZooKeeperConnector row, Map<String, Object> root,
-			Map<String, Object> current, LogicletContext ctx,
+	protected abstract void onExecute(ZooKeeperConnector row, XsObject root,XsObject current, LogicletContext ctx,
 			ExecuteWatcher watcher);
 		
 	@Override
