@@ -9,7 +9,10 @@ import org.apache.commons.lang3.StringUtils;
 import com.alogic.xscript.ExecuteWatcher;
 import com.alogic.xscript.Logiclet;
 import com.alogic.xscript.LogicletContext;
+import com.alogic.xscript.doc.XsObject;
+import com.alogic.xscript.doc.json.JsonObject;
 import com.alogic.xscript.plugins.Segment;
+import com.anysoft.util.BaseException;
 import com.anysoft.util.Properties;
 import com.anysoft.util.PropertiesConstants;
 import com.jayway.jsonpath.spi.JsonProvider;
@@ -35,11 +38,11 @@ public class ZKGetAsJson extends Segment{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected void onExecute(Map<String, Object> root,
-			Map<String, Object> current, LogicletContext ctx,
+	protected void onExecute(XsObject root,
+			XsObject current, LogicletContext ctx,
 			ExecuteWatcher watcher) {
-		String tagValue = ctx.transform(tag);
-		if (StringUtils.isNotEmpty(tagValue)){
+		if (current instanceof JsonObject){
+			Map<String,Object> jsonCurrent = (Map<String, Object>) current.getContent();
 			String v = ctx.transform(content);
 			if (StringUtils.isNotEmpty(v)){
 				Object template = provider.parse(v);
@@ -50,17 +53,28 @@ public class ZKGetAsJson extends Segment{
 						Iterator<Entry<String,Object>> iter = data.entrySet().iterator();
 						while (iter.hasNext()){
 							Entry<String,Object> entry = iter.next();
-							current.put(entry.getKey(), entry.getValue());
+							jsonCurrent.put(entry.getKey(), entry.getValue());
 						}
 						super.onExecute(root, current, ctx, watcher);
 					}else{
-						current.put(tagValue, template);
-						super.onExecute(root, (Map<String,Object>)template, ctx, watcher);
+						String tagValue = ctx.transform(tag);
+						if (StringUtils.isNotEmpty(tagValue)){
+							jsonCurrent.put(tagValue, template);
+							JsonObject newCurrent = new JsonObject(tagValue,(Map<String,Object>)template);
+							super.onExecute(root, newCurrent, ctx, watcher);
+						}
 					}
 				}else{
-					current.put(tagValue, template);
+					String tagValue = ctx.transform(tag);
+					if (StringUtils.isNotEmpty(tagValue)){
+						jsonCurrent.put(tagValue, template);
+					}
 				}
-			}
-		}		
+			}		
+		}else{
+			throw new BaseException("core.not_supported",
+					String.format("Tag %s does not support protocol %s",
+							getXmlTag(),root.getClass().getName()));	
+		}	
 	}
 }

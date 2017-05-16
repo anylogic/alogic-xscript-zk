@@ -138,7 +138,10 @@ ZooKeeper启动后，就可以运行[demo](src/test/java/Demo.java)来测试xscr
 	+ ZookeeperConnector的Path修改为UPath
 - 3.4.6.6 [20170512 duanyy]
 	+ 基于alogic-1.6.8发布新版本
-	+ 解决1.6.8中xscript的兼容性问题	
+	+ 解决1.6.8中xscript的兼容性问题
+- 3.4.6.7 [20170516 duanyy]
+	+ 优化ZKGetAsJson插件
+		
 	
 
 	
